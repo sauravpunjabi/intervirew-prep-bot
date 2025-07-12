@@ -25,6 +25,11 @@ export async function signUp(params: SignUpParams){
             name, email
         })
 
+        return{
+            success: true,
+            message: "You have successfully created an account. Please sign in"
+        }
+
 
     }catch(e : any){
         console.error(`Error creating a user`, e);

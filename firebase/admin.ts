@@ -8,8 +8,8 @@ const initFirebaseAdmin = () => {
     if(!apps.length){
         initializeApp({
             credential: cert({
-                projectId: process.env.Firebase_Projet_ID,
-                clientEmail: process.env.Firebase_Client_Emial,
+                projectId: process.env.Firebase_Project_ID,
+                clientEmail: process.env.Firebase_Client_Email,
                 privateKey: process.env.Firebase_Private_Key?.replace(/\\n/g, "\n")
             })
         })
