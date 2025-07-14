@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import Image from 'next/image'
 import React from 'react'
 
@@ -5,12 +6,19 @@ enum CallStatus{
     Inactive = 'Inactive',
     Connecting = 'Connecting',
     Active = 'Active',
-    Done = 'Done'
+    Finished = 'Finished',
 }
 
 const Agent = ({ userName } : AgentProps) => {
 
+    const callStatus = CallStatus.Finished;
     const isSpeaking = true;
+    const messages = [
+        'Whats your name?',
+        "My name is ABCD, nice to meet you!"
+    ]
+
+    const lastMessage = messages[messages.length - 1];
 
   return (
 
@@ -37,12 +45,30 @@ const Agent = ({ userName } : AgentProps) => {
         </div>
     </div>
 
+
+        {messages.length > 0 &&(
+            <div className='transcript-border'>
+
+                <div className='transcript'>
+                    <p key={lastMessage} className = {cn(
+                        'transition-opacity duration-500 opacity-0', 'animate-fadeIn opacity-100'
+                    )}>
+                        {lastMessage}
+                    </p>
+                </div>
+
+            </div>
+        )}
+
+
         <div className='w-full flex justify-center'>
-            {CallStatus !== 'Active' ? (
-                <button>
-                    <span>
-                        {CallStatus === 'Inactive' || CallStatus === 'Done' ? 'Call' : '...'}
-                    </span>
+            {callStatus !== 'Active' ? (
+                <button className='relative btn-call'>
+                    <span className={cn('absolute animate-ping rounded-full opacity-75', callStatus !== 'Connecting' && 'hidden')}/>
+
+                        <span>
+                            {callStatus === 'Inactive' || callStatus === 'Finished' ? 'Call' : '...'}
+                        </span>
                 </button>
             ) : (
                 <button className='btn-disconnect'>
