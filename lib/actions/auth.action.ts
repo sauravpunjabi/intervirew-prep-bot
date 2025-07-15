@@ -4,7 +4,7 @@ import { db, auth } from "@/firebase/admin";
 import { cookies } from "next/headers";
 import { success } from "zod";
 
-const One_Week = 60 * 60 * 24 * 7;
+const One_Day = 60 * 60 * 24;
 
 export async function signUp(params: SignUpParams){
     const { uid, name, email } = params;
@@ -79,11 +79,11 @@ export async function setSessionCookie(idToken : string){
 
 
     const sessionCookie = await auth.createSessionCookie(idToken, {
-        expiresIn: One_Week * 1000,
+        expiresIn: One_Day * 1000,
     })
 
     cookiesStore.set('session', sessionCookie, {
-        maxAge: One_Week,
+        maxAge: One_Day,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         path: '/',
